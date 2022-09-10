@@ -7,7 +7,7 @@ const MainLayout = ({ title = "", children }) => {
     <>
       <Seo subtitle={title} />
       <Header />
-      <main className="min-h-screen h-full w-full ">{children}</main>
+      <main className=" h-full w-full ">{children}</main>
       <Footer />
     </>
   );

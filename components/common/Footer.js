@@ -69,7 +69,13 @@ const Footer = () => {
         </div>
         <div className="mt-8 md:order-1 md:mt-0">
           <p className="text-center text-base text-gray-400">
-            &copy; {new Date().getFullYear()} Software Guru
+            &copy; {new Date().getFullYear()} - Una iniciativa de{" "}
+            <a target="_blank" href="https://sg.com.mx/" rel="noreferrer">
+              <span className="text-guru-blue hover:underline cursor-pointer">
+                Software Guru
+              </span>
+            </a>
+            . We 💙 devs!
           </p>
         </div>
       </div>
