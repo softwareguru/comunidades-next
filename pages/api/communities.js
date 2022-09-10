@@ -7,7 +7,6 @@ export default async function handler(req, res) {
       const records = await table.select({}).firstPage();
       const minfiedRecords = minifyItems(records);
       //return only the ones that are approved
-      console.log("minfiedRecords =>", minfiedRecords);
       const approvedCommunities = minfiedRecords.filter(
         (item) => item.fields["Verificación"] === true
       );
