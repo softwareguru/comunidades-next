@@ -13,13 +13,6 @@ const Header = () => {
               </a>
             </Link>
           </div>
-          <div className="ml-10  space-x-8 lg:block">
-            <Link href="/communities/add">
-              <a className="bg-guru-blue px-4 py-2 rounded-md text-sm font-medium text-white">
-                Agregar Comunidad
-              </a>
-            </Link>
-          </div>
         </div>
       </nav>
     </header>

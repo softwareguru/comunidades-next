@@ -7,7 +7,9 @@ const MainLayout = ({ title = "", children }) => {
     <>
       <Seo subtitle={title} />
       <Header />
-      <main className=" h-full w-full ">{children}</main>
+      <main className=" h-full w-full min-w-full flex justify-center items-center ">
+        {children}
+      </main>
       <Footer />
     </>
   );
