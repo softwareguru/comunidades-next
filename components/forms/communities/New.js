@@ -1,8 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useForm } from "react-hook-form";
 import LoadingCircle from "@/components/common/LoadingCircle";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
-import { Input, TextArea } from "@/components/forms/fields";
+import { Input, TextArea, Select } from "@/components/forms/fields";
+import { State, Country } from "country-state-city";
 
 const NewCommunityForm = () => {
   const {
@@ -14,6 +16,21 @@ const NewCommunityForm = () => {
   } = useForm();
 
   const [loading, setLoading] = useState(false);
+  const [countries, setCountries] = useState([]);
+
+  useEffect(() => {
+    const fetchCountries = async () => {
+      const _countries = await Country.getAllCountries();
+      const parsedCountries = _countries.map((country) => ({
+        label: country.name,
+        value: country.isoCode,
+      }));
+      setCountries(parsedCountries);
+      console.log("countries =>", countries);
+    };
+
+    fetchCountries();
+  }, []);
 
   const onSubmit = async (data) => {
     console.log("data =>", data);
@@ -62,6 +79,22 @@ const NewCommunityForm = () => {
             }),
           }}
           errorMessage={errors.description?.message}
+        />
+      </div>
+      <div className="inputwrapper my-3">
+        <Select
+          label="País"
+          name="country"
+          options={countries}
+          register={{
+            ...register("country", {
+              required: {
+                value: true,
+                message: "Pais es requerido",
+              },
+            }),
+          }}
+          errorMessage={errors.country?.message}
         />
       </div>
       <div className="inputwrapper my-3">
