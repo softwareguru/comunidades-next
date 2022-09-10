@@ -1,4 +1,4 @@
-import { table } from "@/utils/airtable";
+import { table, minifyItems } from "@/utils/airtable";
 
 export default async function handler(req, res) {
   //get all communities from Airtable
@@ -8,7 +8,7 @@ export default async function handler(req, res) {
       const minfiedRecords = minifyItems(records);
       res.status(200).json({ communities: minfiedRecords });
     } catch (error) {
-      console.error(err);
+      console.error(error);
       res.status(500).json({ msg: "Something went wrong getting records! 😕" });
     }
   } else {
