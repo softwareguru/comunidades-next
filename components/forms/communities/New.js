@@ -4,7 +4,7 @@ import LoadingCircle from "@/components/common/LoadingCircle";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { Input, TextArea, Select } from "@/components/forms/fields";
-import { State, Country } from "country-state-city";
+import { City, Country, State } from "country-state-city";
 
 const NewCommunityForm = () => {
   const {
@@ -12,12 +12,19 @@ const NewCommunityForm = () => {
     handleSubmit,
     setError,
     clearErrors,
+    watch,
     formState: { errors },
   } = useForm();
 
+  const countryCode = watch("country");
+  const stateCode = watch("state");
+
   const [loading, setLoading] = useState(false);
   const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
 
+  //Fetch countries
   useEffect(() => {
     const fetchCountries = async () => {
       const _countries = await Country.getAllCountries();
@@ -26,15 +33,42 @@ const NewCommunityForm = () => {
         value: country.isoCode,
       }));
       setCountries(parsedCountries);
-      console.log("countries =>", countries);
     };
 
     fetchCountries();
   }, []);
 
+  //fetch states
+  useEffect(() => {
+    const fetchStates = async () => {
+      const _states = await State.getStatesOfCountry(countryCode);
+      const parsedStates = _states.map((state) => ({
+        label: state.name,
+        value: state.isoCode,
+      }));
+      setStates(parsedStates);
+    };
+
+    if (countryCode) fetchStates();
+  }, [countryCode]);
+
+  //fetch cities
+  useEffect(() => {
+    const fetchCities = async () => {
+      const _cities = await City.getCitiesOfState(countryCode, stateCode);
+      const parsedCities = _cities.map((city) => ({
+        label: city.name,
+        value: city.name,
+      }));
+      setCities(parsedCities);
+    };
+    if (stateCode) fetchCities();
+  }, [stateCode]);
+
   const onSubmit = async (data) => {
     console.log("data =>", data);
   };
+
   return (
     <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
       <div className="inputwrapper my-3">
@@ -95,6 +129,38 @@ const NewCommunityForm = () => {
             }),
           }}
           errorMessage={errors.country?.message}
+        />
+      </div>
+      <div className="inputwrapper my-3">
+        <Select
+          label="Estado"
+          name="state"
+          options={states}
+          register={{
+            ...register("state", {
+              required: {
+                value: true,
+                message: "Estado es requerido",
+              },
+            }),
+          }}
+          errorMessage={errors.state?.message}
+        />
+      </div>
+      <div className="inputwrapper my-3">
+        <Select
+          label="Ciudad"
+          name="city"
+          options={cities}
+          register={{
+            ...register("city", {
+              required: {
+                value: true,
+                message: "Ciudad es requerida",
+              },
+            }),
+          }}
+          errorMessage={errors.city?.message}
         />
       </div>
       <div className="inputwrapper my-3">
