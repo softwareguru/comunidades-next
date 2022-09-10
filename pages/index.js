@@ -1,7 +1,7 @@
 import MainLayout from "@/components/layouts/MainLayout";
 import Hero from "@/components/home/Hero";
 import CommunityItem from "@/components/home/CommunityItem";
-import { table, minifyItems } from "@/utils/Airtable";
+import { table, minifyItems } from "@/utils/airtable";
 
 export default function Home({ initialItems, initialError }) {
   console.log("initialItems =>", initialItems);

@@ -1,4 +1,4 @@
-import { table } from "@/utils/Airtable";
+import { table } from "@/utils/airtable";
 
 export default async function handler(req, res) {
   //get all communities from Airtable
